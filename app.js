@@ -13,19 +13,10 @@
 
   if (!likeButton || !messageNode || !viewsNode || !likesNode || !withoutLikeNode) return;
 
-  const LOCAL_VIEWS_KEY = "ac_local_views";
-  const LOCAL_LIKES_KEY = "ac_local_likes";
-
   const setMessage = (text, type) => {
     messageNode.textContent = text;
     messageNode.classList.remove("ok", "error");
     if (type) messageNode.classList.add(type);
-  };
-
-  const getLocalNumber = (key) => Number(localStorage.getItem(key) || "0") || 0;
-
-  const setLocalNumber = (key, value) => {
-    localStorage.setItem(key, String(Math.max(0, Number(value) || 0)));
   };
 
   const render = (views, likes) => {
@@ -59,10 +50,6 @@
     render(viewsRes.value || 0, likesRes.value || 0);
   };
 
-  const refreshLocal = () => {
-    render(getLocalNumber(LOCAL_VIEWS_KEY), getLocalNumber(LOCAL_LIKES_KEY));
-  };
-
   const applyLikeLock = () => {
     const alreadyLiked = localStorage.getItem(LIKE_LOCK_KEY) === "1";
     if (alreadyLiked) {
@@ -73,18 +60,12 @@
   };
 
   const bootstrap = async () => {
-    // Always paint deterministic defaults before async calls.
-    refreshLocal();
-
     try {
       await apiHit(VIEW_ACTION);
       await refreshRemote();
       setMessage("Counters updated.", "ok");
     } catch (error) {
-      // Keep UX alive even if external counter service is temporarily down.
-      setLocalNumber(LOCAL_VIEWS_KEY, getLocalNumber(LOCAL_VIEWS_KEY) + 1);
-      refreshLocal();
-      setMessage("Global counter is temporarily unavailable. Showing local fallback values.", "error");
+      setMessage("Global counter is temporarily unavailable.", "error");
       console.error(error);
     }
 
@@ -106,9 +87,7 @@
       await refreshRemote();
       setMessage("Like counted.", "ok");
     } catch (error) {
-      setLocalNumber(LOCAL_LIKES_KEY, getLocalNumber(LOCAL_LIKES_KEY) + 1);
-      refreshLocal();
-      setMessage("Like saved locally. Global counter is temporarily unavailable.", "error");
+      setMessage("Could not count like. Global counter is temporarily unavailable.", "error");
       console.error(error);
     }
   });
