@@ -68,11 +68,13 @@
     if (alreadyLiked) {
       likeButton.disabled = true;
       likeButton.textContent = "👍 Already liked";
+      setMessage("This browser already sent a like.", "ok");
     }
   };
 
   const bootstrap = async () => {
-    applyLikeLock();
+    // Always paint deterministic defaults before async calls.
+    refreshLocal();
 
     try {
       await apiHit(VIEW_ACTION);
@@ -82,9 +84,11 @@
       // Keep UX alive even if external counter service is temporarily down.
       setLocalNumber(LOCAL_VIEWS_KEY, getLocalNumber(LOCAL_VIEWS_KEY) + 1);
       refreshLocal();
-      setMessage("External counter is unavailable. Running in local fallback mode.", "error");
+      setMessage("Global counter is temporarily unavailable. Showing local fallback values.", "error");
       console.error(error);
     }
+
+    applyLikeLock();
   };
 
   likeButton.addEventListener("click", async () => {
@@ -104,7 +108,7 @@
     } catch (error) {
       setLocalNumber(LOCAL_LIKES_KEY, getLocalNumber(LOCAL_LIKES_KEY) + 1);
       refreshLocal();
-      setMessage("Like saved locally (external counter is unavailable).", "error");
+      setMessage("Like saved locally. Global counter is temporarily unavailable.", "error");
       console.error(error);
     }
   });
