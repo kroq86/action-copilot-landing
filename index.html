@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Action Copilot | Chrome Sidebar -> Actionable Board Tasks</title>
+    <meta
+      name="description"
+      content="Action Copilot turns browser context into structured board tasks with automated status, deadline, and stale-task control rules."
+    />
+    <meta
+      name="keywords"
+      content="chrome sidebar, kanban, OCR, task extraction, workflow automation, action copilot"
+    />
+    <link rel="canonical" href="https://kroq86.github.io/action-copilot-landing/" />
+    <meta property="og:title" content="Action Copilot" />
+    <meta
+      property="og:description"
+      content="Chrome sidebar that converts page context into structured board tasks with automation rules."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kroq86.github.io/action-copilot-landing/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="badge">Product in Development</p>
+          <h1>Action Copilot</h1>
+          <p class="subtitle">
+            A Chrome sidebar that turns email/chat/page context into
+            <strong>ready-to-run board tasks</strong>, not just extracted text.
+          </p>
+          <div class="hero-cta-row">
+            <a href="#demand" class="cta">Like the idea</a>
+            <span class="cta-note">We are validating real demand right now</span>
+          </div>
+        </div>
+
+        <div class="hero-mock" aria-hidden="true">
+          <div class="mock-top">Action Copilot Sidebar</div>
+          <div class="mock-block">
+            <div class="mock-title">Prompt</div>
+            <div class="mock-line">Extract tasks with owner, priority, due date</div>
+          </div>
+          <div class="mock-block">
+            <div class="mock-title">Source text</div>
+            <div class="mock-line">Google Ads: campaigns stopped running...</div>
+          </div>
+          <div class="mock-button">Create Card in Board</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Who This Is For</h2>
+        <div class="grid3">
+          <article class="card">
+            <h3>Agencies</h3>
+            <p>Client requests live in email and chat; tasks often get lost.</p>
+          </article>
+          <article class="card">
+            <h3>SMB Ops Teams</h3>
+            <p>Need a fast path from "found issue" to "assigned task with due date".</p>
+          </article>
+          <article class="card">
+            <h3>Small Product Teams</h3>
+            <p>Need consistent execution without manual context copy-paste.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Product Scope</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>Scope In</h3>
+            <ul>
+              <li>Capture Screen from browser and import page context</li>
+              <li>Prompt-driven normalization into a chosen output schema</li>
+              <li>Create and update cards on a board</li>
+              <li>Automated board rules for status, due-date, and stale-task control</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Scope Out</h3>
+            <ul>
+              <li>Not a full CRM/ATS/ERP replacement</li>
+              <li>Not an OCR-only utility with no workflow automation</li>
+              <li>Not a "zero-config autopilot" product</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>How It Works</h2>
+        <div class="steps">
+          <div class="step"><span>1</span> Capture screen or pull text context from the active page.</div>
+          <div class="step"><span>2</span> Apply a prompt plus output schema (JSON/Markdown/CSV) to structure the action payload.</div>
+          <div class="step"><span>3</span> Create a card on the board because the board is the execution surface, not storage only.</div>
+          <div class="step"><span>4</span> Board automation rules run automatically to control statuses, deadlines, stale tasks, and follow-ups.</div>
+        </div>
+      </section>
+
+      <section id="demand" class="interest">
+        <h2>Demand Check</h2>
+        <p>
+          If this is useful, tap like. We track: total visits, likes, and visits
+          without like.
+        </p>
+
+        <button id="like-button" type="button">👍 I would use this</button>
+        <p id="like-message" class="message" role="status" aria-live="polite"></p>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Total Visits</span>
+            <strong id="views-count">-</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Likes</span>
+            <strong id="likes-count">-</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Visits Without Like</span>
+            <strong id="without-like-count">-</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="footnote">
+        <p>
+          Current stage: demand validation and core-engine hardening.
+        </p>
+        <p>
+          Want a demo? DM
+          <a href="https://github.com/kroq86" target="_blank" rel="noopener noreferrer">@kroq86</a>
+          on GitHub.
+        </p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
