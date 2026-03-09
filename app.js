@@ -1,7 +1,8 @@
 (() => {
-  const COUNTER_NAMESPACE = "action-copilot-landing";
-  const VIEWS_KEY = "views";
-  const LIKES_KEY = "likes";
+  const COUNTER_NAMESPACE = "kroq86.github.io";
+  const COUNTER_KEY = "action-copilot-landing";
+  const VIEW_ACTION = "view";
+  const LIKE_ACTION = "vote";
   const LIKE_LOCK_KEY = "action_copilot_liked";
 
   const likeButton = document.getElementById("like-button");
@@ -36,20 +37,25 @@
     withoutLikeNode.textContent = String(withoutLike);
   };
 
-  const apiGet = async (key) => {
-    const response = await fetch(`https://api.countapi.xyz/get/${COUNTER_NAMESPACE}/${key}`);
-    if (!response.ok) throw new Error(`GET ${key} failed (${response.status})`);
+  const buildCounterUrl = (action, readOnly) => {
+    const suffix = readOnly ? "?readOnly=true" : "";
+    return `https://counterapi.com/api/${COUNTER_NAMESPACE}/${action}/${COUNTER_KEY}${suffix}`;
+  };
+
+  const apiRead = async (action) => {
+    const response = await fetch(buildCounterUrl(action, true));
+    if (!response.ok) throw new Error(`READ ${action} failed (${response.status})`);
     return response.json();
   };
 
-  const apiHit = async (key) => {
-    const response = await fetch(`https://api.countapi.xyz/hit/${COUNTER_NAMESPACE}/${key}`);
-    if (!response.ok) throw new Error(`HIT ${key} failed (${response.status})`);
+  const apiHit = async (action) => {
+    const response = await fetch(buildCounterUrl(action, false));
+    if (!response.ok) throw new Error(`HIT ${action} failed (${response.status})`);
     return response.json();
   };
 
   const refreshRemote = async () => {
-    const [viewsRes, likesRes] = await Promise.all([apiGet(VIEWS_KEY), apiGet(LIKES_KEY)]);
+    const [viewsRes, likesRes] = await Promise.all([apiRead(VIEW_ACTION), apiRead(LIKE_ACTION)]);
     render(viewsRes.value || 0, likesRes.value || 0);
   };
 
@@ -69,7 +75,7 @@
     applyLikeLock();
 
     try {
-      await apiHit(VIEWS_KEY);
+      await apiHit(VIEW_ACTION);
       await refreshRemote();
       setMessage("Counters updated.", "ok");
     } catch (error) {
@@ -92,7 +98,7 @@
     likeButton.textContent = "👍 Already liked";
 
     try {
-      await apiHit(LIKES_KEY);
+      await apiHit(LIKE_ACTION);
       await refreshRemote();
       setMessage("Like counted.", "ok");
     } catch (error) {

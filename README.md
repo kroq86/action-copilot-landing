@@ -41,7 +41,7 @@ Landing tracks:
 - `views_without_like = views - likes`
 
 Implementation:
-- CountAPI (no backend)
+- CounterAPI (no backend)
 - Browser like lock via localStorage key `action_copilot_liked`
 
 ## Demo Contact
