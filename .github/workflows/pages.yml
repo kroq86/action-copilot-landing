@@ -24,6 +24,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify Pages Is Enabled
+        run: |
+          set -euo pipefail
+          STATUS=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages")
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::GitHub Pages is not enabled for this repository. Go to Settings -> Pages and set Source to GitHub Actions."
+            cat /tmp/pages.json
+            exit 1
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
