@@ -1,8 +1,54 @@
-# Action Copilot Landing (Standalone)
+# Action Copilot Landing
 
-Static landing page with public demand counters.
+Public landing page for **Action Copilot** demand validation.
 
-## Run locally
+## Product Summary
+
+Action Copilot is a Chrome sidebar that turns email/chat/page context into **actionable board tasks**.
+
+This is not "just OCR". The value is execution flow:
+1. Capture context
+2. Structure it with prompt + output schema
+3. Create/update board cards
+4. Run automated control rules (status/deadline/stale/follow-up)
+
+## Who This Is For
+
+- Agencies handling many client requests in email/chat
+- SMB operations teams that need fast issue-to-task conversion
+- Small product teams that need consistent execution without copy-paste loops
+
+## Scope
+
+### Scope In
+
+- Capture Screen from browser + page context import
+- Prompt-driven normalization into JSON/Markdown/CSV payloads
+- Card creation/update on board
+- Automated board rules for status, due-date, stale-task, follow-up control
+
+### Scope Out
+
+- Not a full CRM/ATS/ERP replacement
+- Not an OCR-only tool with no workflow layer
+- Not a zero-config autopilot
+
+## Demand Check (Live Counters)
+
+Landing tracks:
+- `views`
+- `likes`
+- `views_without_like = views - likes`
+
+Implementation:
+- CountAPI (no backend)
+- Browser like lock via localStorage key `action_copilot_liked`
+
+## Demo Contact
+
+For demo access, DM [@kroq86](https://github.com/kroq86) on GitHub.
+
+## Run Locally
 
 ```bash
 cd /Users/ll/Documents/next-product-plan/landing
@@ -11,36 +57,12 @@ python3 -m http.server 8080
 
 Open <http://localhost:8080>.
 
-## Counters
+## SEO + Pages
 
-Implemented via CountAPI (no backend required):
-- `views`
-- `likes`
-- `views_without_like = views - likes`
+- `index.html` includes canonical + OG URL
+- `robots.txt` allows crawl + points to sitemap
+- `sitemap.xml` includes the main URL
+- GitHub Pages deploy workflow: `.github/workflows/pages.yml`
 
-Browser-level like lock:
-- One like per browser via localStorage key `action_copilot_liked`.
-
-## SEO files
-
-- `index.html` contains canonical URL.
-- `robots.txt` allows crawling and points to sitemap.
-- `sitemap.xml` includes main page URL.
-
-## GitHub Pages deploy
-
-Workflow file:
-- `.github/workflows/pages.yml`
-
-After pushing to GitHub:
-1. Open repo settings -> Pages.
-2. Set source to GitHub Actions.
-3. Push to `main` branch.
-4. Wait for action "Deploy Landing to GitHub Pages" to finish.
-
-## Important
-
-If your final repo URL differs, replace `kroq86.github.io/action-copilot-landing` in:
-- `index.html` canonical + og:url
-- `robots.txt` sitemap URL
-- `sitemap.xml` loc
+If repo URL changes, update all occurrences of:
+- `https://kroq86.github.io/action-copilot-landing/`
